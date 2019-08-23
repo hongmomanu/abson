@@ -4,27 +4,32 @@
 const filebrowser = document.getElementById('uploadfile');
 const msgDiv = document.getElementById('msginfo');
 const openDirBtn = document.getElementById('opendir');
+const refreshBtn = document.getElementById('refresh');
 const fs = require('fs');
 const ospath = require('path');
-openDirBtn.style.display ='none';
+openDirBtn.style.display = 'none';
 //const filename = document.getElementById('outputfile').value;
 const Excel = require('exceljs/modern.nodejs');
 const outputDir = require('electron').remote.app.getPath('desktop');
-const items_map = {};
-const baseTime = new Date('1900-01-01 00:00:00');
-openDirBtn.onclick=()=>{
 
-  const dir =   ospath.resolve(outputDir,'Abson');
-  const { shell } = require('electron')
+const baseTime = new Date('1900-01-01 00:00:00');
+openDirBtn.onclick = () => {
+  const dir = ospath.resolve(outputDir, 'Abson');
+  const {
+    shell
+  } = require('electron')
   shell.openExternal(dir)
-  
+
+}
+refreshBtn.onclick=()=>{
+  location.reload();
 }
 
-function makeCountry(str){
-  for(var i=0;i<CountryArr.length;i++){
-    console.log('makeCountry',CountryArr[i],str+'-',CountryArr[i].includes((str+'-')));
-    if(CountryArr[i].includes(str+'-')){
-      console.log('makeCountry done',CountryArr[i].split("-")[1])
+function makeCountry(str) {
+  for (var i = 0; i < CountryArr.length; i++) {
+    console.log('makeCountry', CountryArr[i], str + '-', CountryArr[i].includes((str + '-')));
+    if (CountryArr[i].includes(str + '-')) {
+      console.log('makeCountry done', CountryArr[i].split("-")[1])
       return CountryArr[i].split("-")[1];
     }
   }
@@ -35,19 +40,27 @@ function makeDou(str) {
   if (str < 10) return `0${str}`;
   else return `${str}`;
 }
-
+filebrowser.onclick = (e) => {
+  filebrowser.value = null;
+}
+window.onkeydown=(e)=>{
+  console.log(e.code);
+  if(e.code === 'F12'){
+    require('electron').remote.getCurrentWindow().openDevTools({mode:'bottom'});
+  }
+}
 filebrowser.onchange = (e) => {
-
+  const items_map = {};
   const file = e.target.files[0];
   const {
     path
   } = file;
   console.log('path', path)
-  msgDiv.innerHTML='';
+  msgDiv.innerHTML = '';
   var PizZip = require('pizzip');
   var Docxtemplater = require('docxtemplater');
 
-  
+
 
   //Load the docx file as a binary
   var tempfilename = ospath.resolve(__dirname, 'template.docx')
@@ -57,23 +70,24 @@ filebrowser.onchange = (e) => {
   var zip = new PizZip(content);
 
   var doc = new Docxtemplater();
+  doc.setOptions({linebreaks:true});
   doc.loadZip(zip);
 
   var workbook = new Excel.Workbook();
-  msgDiv.innerHTML +=`正在读取文件。。。<br>`
+  msgDiv.innerHTML += `<div class="suc">正在读取文件。。。</div>`
   workbook.xlsx.readFile(path)
     .then(function () {
       var worksheet = workbook.getWorksheet('Disp w.34');
-      if(!worksheet){
+      if (!worksheet) {
         alert('excel里面缺少页面 Disp w.34')
-        msgDiv.innerHTML =`excel里面缺少页面 Disp w.3<br>`
+        msgDiv.innerHTML = `<div class="err">excel里面缺少页面 Disp w.3！</div>`
         return;
       }
-      msgDiv.innerHTML +=`读取文件成功<br>`
+      msgDiv.innerHTML += `<div class="suc">读取文件成功。</div>`
       worksheet.eachRow(function (row, rowNumber) {
         if (rowNumber > 2) {
           const ddate = new Date(baseTime.getTime() + (row.getCell(17) - 1) * 24 * 3600 * 1000);
-          if(!row.getCell(2).text)return;
+          if (!row.getCell(2).text) return;
           const item = {
             ponum: row.getCell(2).text.substr(2),
             ponumstr: row.getCell(2).text,
@@ -85,30 +99,37 @@ filebrowser.onchange = (e) => {
             year: makeDou(ddate.getFullYear()),
             monthstr: ddate.toDateString().split(" ")[1],
             dest: row.getCell(4).text,
-            destZh:makeCountry(row.getCell(4).text.split(",")[1].replace(/ /g,'')),
+            destZh: makeCountry(row.getCell(4).text.split(",")[1].replace(/ /g, '')),
             description: row.getCell(6).text,
             amount: row.getCell(7).text,
             price: row.getCell(15).text,
             money: (row.getCell(7).text * row.getCell(15).text).toFixed(2),
-            nowyear:makeDou(new Date().getFullYear()),
-            nowmonth:makeDou(new Date().getMonth() + 1),
-            nowday:makeDou(new Date().getDate()),
+            nowyear: makeDou(new Date().getFullYear()),
+            nowmonth: makeDou(new Date().getMonth() + 1),
+            nowday: makeDou(new Date().getDate()),
           }
+          item.during = Factory_Map[item.itemno][0];
+          item.seller = Factory_Map[item.itemno][1];
+          item.sellerzh = Factory_Map[item.itemno][2];
+          item.address = Factory_Map[item.itemno][3];
+          item.addresszh = Factory_Map[item.itemno][4];
+          item.tel = Factory_Map[item.itemno][5];
+          item.packing = Factory_Map[item.itemno][6];
+          item.sellerAgency = Factory_Map[item.itemno][7]?`\n${Factory_Map[item.itemno][7]}\n`:'';
           if (items_map[row.getCell(2).text]) {
-            items_map[item.ponumstr].totalmoney += (item.money*1);
+            items_map[item.ponumstr].totalmoney += (item.money * 1);
             items_map[item.ponumstr].clients.push(item);
           } else {
-            items_map[item.ponumstr] = Object.assign({},item);
-            items_map[item.ponumstr].totalmoney = (item.money*1);
+            items_map[item.ponumstr] = Object.assign({}, item);
+            items_map[item.ponumstr].totalmoney = (item.money * 1);
             items_map[item.ponumstr].clients = [item];
           }
-         
+
         }
       });
 
       for (var key in items_map) {
         //set the templateVariables
-        console.log('key',items_map[key])
         items_map[key].totalmoney = items_map[key].totalmoney.toFixed(2);
         doc.setData(items_map[key]);
         const filename = `${key}_${items_map[key].nowyear}_${items_map[key].nowmonth}_${items_map[key].nowday}.docx`
@@ -135,26 +156,27 @@ filebrowser.onchange = (e) => {
             type: 'nodebuffer'
           });
 
-        const dir =   ospath.resolve(outputDir,'Abson');
+        const dir = ospath.resolve(outputDir, 'Abson');
         if (!fs.existsSync(dir)) {
           fs.mkdirSync(dir)
         }
         const outputFile = ospath.resolve(dir, filename);
-        try{
+        try {
           fs.writeFileSync(outputFile, buf);
-          msgDiv.innerHTML +=`${filename} 已生成完毕<br>`
-        }catch(e){
-          msgDiv.innerHTML +=`${filename} 文件已打开,生成失败<br>`
+          msgDiv.innerHTML += `<div class="suc">${filename} 已成功！</div>`
+        } catch (e) {
+          msgDiv.innerHTML += `<div class="err">${filename} 文件已打开,生成失败</div>`
         }
-        
-        
-        
+
+
+
         //alert('完成')
-        
+
 
       }
-      msgDiv.innerHTML +=`全部生成完毕`;
-      openDirBtn.style.display ='block';
+      msgDiv.innerHTML += `<div class="suc">全部结束</div>`;
+      openDirBtn.style.display = 'block';
+
 
 
 
@@ -166,6 +188,6 @@ filebrowser.onchange = (e) => {
 
 
 
-  
+
 
 }

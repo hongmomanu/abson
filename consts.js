@@ -191,4 +191,17 @@ let CountryArr = [
   "Zimbabwe-津巴布韦-263",
   "Zaire-扎伊尔-243",
   "Zambia-赞比亚-260"
-]
+];
+
+let Factory_Map= {
+  '22012':['45','Ningbo Songyuan Electric Appliance Co., Ltd','宁波松园电器有限公司','Linpu village, Linshan town, Yuyao city, Zhejiang province, China','浙江省余姚市临山镇临浦村','86-574-6207 6366','500'],
+  '22016':['30','CIXI LITUO HARDWARE FACTORY','慈溪市力拓机械有限公司','No.63 DaiJia Road., Ci Xi City , Zhe Jiang Province, CHINA','浙江省慈溪市长河镇戴家路63号','86-574-63401705','2160','Seller\'s Agency: Ningbo Cixi Import And Export Holdings Co.,Ltd.'],
+  '12219':['75','ZHEJIANG YUHE MACHINERY CO.,LTD.','浙江宇和机械有限公司','Kanmen street Technological industrial Zone \n Yuhuan,zhejiang,China 317602','浙江省玉环县（坎门）科技工业园区','0576-87578996','100'],
+  '12218':['75','ZHEJIANG YUHE MACHINERY CO.,LTD.','浙江宇和机械有限公司','Kanmen street Technological industrial Zone \n Yuhuan,zhejiang,China 317602','浙江省玉环县（坎门）科技工业园区','0576-87578996','100'],
+  '22096':['60','ZHEJIANG YUHE MACHINERY CO.,LTD.','浙江宇和机械有限公司','Kanmen street Technological industrial Zone \n Yuhuan,zhejiang,China 317602','浙江省玉环县（坎门）科技工业园区','0576-87578996','150'],
+  '12313':['75','ZHEJIANG YUHE MACHINERY CO.,LTD.','浙江宇和机械有限公司','Kanmen street Technological industrial Zone \n Yuhuan,zhejiang,China 317602','浙江省玉环县（坎门）科技工业园区','0576-87578996','700'],
+  '22098':['60','ZHEJIANG YUHE MACHINERY CO.,LTD.','浙江宇和机械有限公司','Kanmen street Technological industrial Zone \n Yuhuan,zhejiang,China 317602','浙江省玉环县（坎门）科技工业园区','0576-87578996','150'],
+  '12153':['75','ZHEJIANG YUHE MACHINERY CO.,LTD.','浙江宇和机械有限公司','Kanmen street Technological industrial Zone \n Yuhuan,zhejiang,China 317602','浙江省玉环县（坎门）科技工业园区','0576-87578996','700'],
+  '12201':['75','ZHEJIANG YUHE MACHINERY CO.,LTD.','浙江宇和机械有限公司','Kanmen street Technological industrial Zone \n Yuhuan,zhejiang,China 317602','浙江省玉环县（坎门）科技工业园区','0576-87578996','700'],
+  
+}

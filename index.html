@@ -10,11 +10,21 @@
         border: 1px solid black;
         overflow: auto;
       }
+      #uploadfile{
+        width: 400px;
+      }
+      .suc{
+        color: green;
+      }
+      .err{
+        color: red;
+      }
     </style>
   </head>
   <body>
     
   导入excel:<input accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" id="uploadfile" type="file"/>
+  <button id="refresh">刷新</button>
   <input style="display: none" id="outputfile" type="text" value="文件1.docx"/>
 
   <div id="msginfo"></div>
