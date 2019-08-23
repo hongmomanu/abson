@@ -1,10 +1,11 @@
 {
-  "name": "electron-quick-start",
+  "name": "Abson",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "A minimal Abson application",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "pack": "electron-builder --dir"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -17,6 +18,20 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^6.0.3"
-  }
+    "electron": "^6.0.3",
+    "electron-builder": "^21.2.0"
+  },
+  "dependencies": {
+    "docxtemplater": "^3.14.1",
+    "exceljs": "^1.15.0",
+    "pizzip": "^3.0.6"
+  },
+  "build": { 
+    "directories": {
+      "output": "build"
+    }, 
+    "win": {  
+      "icon": "icon.ico"
+    }  
+  } 
 }
