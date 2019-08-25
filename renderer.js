@@ -8,7 +8,6 @@ const refreshBtn = document.getElementById('refresh');
 const fs = require('fs');
 const ospath = require('path');
 openDirBtn.style.display = 'none';
-//const filename = document.getElementById('outputfile').value;
 const Excel = require('exceljs/modern.nodejs');
 const outputDir = require('electron').remote.app.getPath('desktop');
 
@@ -34,6 +33,21 @@ function makeCountry(str) {
     }
   }
   return str;
+}
+function getDateOfISOWeek(w, y) {
+  var simple = new Date(y, 0, 1 + (w - 1) * 7);
+  var dow = simple.getDay();
+  var ISOweekStart = simple;
+  if (dow <= 4)
+      ISOweekStart.setDate(simple.getDate() - simple.getDay() + 1);
+  else
+      ISOweekStart.setDate(simple.getDate() + 8 - simple.getDay());
+  return ISOweekStart;
+}
+function getCurrentWeek(){
+  var now = new Date();
+  var onejan = new Date(now.getFullYear(),0,1);
+  return ( Math.ceil((((now - onejan) / 86400000) + onejan.getDay()+1)/7));
 }
 
 function makeDou(str) {
@@ -86,7 +100,12 @@ filebrowser.onchange = (e) => {
       msgDiv.innerHTML += `<div class="suc">读取文件成功。</div>`
       worksheet.eachRow(function (row, rowNumber) {
         if (rowNumber > 2) {
-          const ddate = new Date(baseTime.getTime() + (row.getCell(17) - 1) * 24 * 3600 * 1000);
+          //const ddate = new Date(baseTime.getTime() + (row.getCell(17) - 1) * 24 * 3600 * 1000);
+          const week = row.getCell(13);
+          const currentWeek = getCurrentWeek();
+          const currentYear = new Date().getFullYear()
+          const weekYear = currentWeek>week?currentYear+1:currentYear;
+          const ddate = getDateOfISOWeek(week,weekYear);
           if (!row.getCell(2).text) return;
           const item = {
             ponum: row.getCell(2).text.substr(2),
@@ -177,10 +196,6 @@ filebrowser.onchange = (e) => {
       msgDiv.innerHTML += `<div class="suc">全部结束</div>`;
       openDirBtn.style.display = 'block';
 
-
-
-
-      // use workbook
 
     });
 

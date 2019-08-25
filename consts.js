@@ -203,5 +203,9 @@ let Factory_Map= {
   '22098':['60','ZHEJIANG YUHE MACHINERY CO.,LTD.','浙江宇和机械有限公司','Kanmen street Technological industrial Zone \n Yuhuan,zhejiang,China 317602','浙江省玉环县（坎门）科技工业园区','0576-87578996','150'],
   '12153':['75','ZHEJIANG YUHE MACHINERY CO.,LTD.','浙江宇和机械有限公司','Kanmen street Technological industrial Zone \n Yuhuan,zhejiang,China 317602','浙江省玉环县（坎门）科技工业园区','0576-87578996','700'],
   '12201':['75','ZHEJIANG YUHE MACHINERY CO.,LTD.','浙江宇和机械有限公司','Kanmen street Technological industrial Zone \n Yuhuan,zhejiang,China 317602','浙江省玉环县（坎门）科技工业园区','0576-87578996','700'],
+  '22391':['75','ZHEJIANG YUHE MACHINERY CO.,LTD.','浙江宇和机械有限公司','Kanmen street Technological industrial Zone \n Yuhuan,zhejiang,China 317602','浙江省玉环县（坎门）科技工业园区','0576-87578996','60'],
+  '22392':['75','ZHEJIANG YUHE MACHINERY CO.,LTD.','浙江宇和机械有限公司','Kanmen street Technological industrial Zone \n Yuhuan,zhejiang,China 317602','浙江省玉环县（坎门）科技工业园区','0576-87578996','250'],
+  '22393':['75','ZHEJIANG YUHE MACHINERY CO.,LTD.','浙江宇和机械有限公司','Kanmen street Technological industrial Zone \n Yuhuan,zhejiang,China 317602','浙江省玉环县（坎门）科技工业园区','0576-87578996','1000'],
+  
   
 }
