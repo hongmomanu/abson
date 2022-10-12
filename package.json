@@ -22,7 +22,7 @@
     "electron-builder": "^21.2.0"
   },
   "dependencies": {
-    "docxtemplater": "^3.14.1",
+    "docxtemplater": "^3.31.4",
     "exceljs": "^1.15.0",
     "pizzip": "^3.0.6"
   },
